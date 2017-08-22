@@ -1,0 +1,24 @@
+git clone https://github.com/tensorflow/tensorflow 
+cd tensorflow
+ls
+sudo apt-get install openjdk-8-jdk
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update && sudo apt-get install oracle-java8-installer
+echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+sudo apt-get update && sudo apt-get install bazel
+conda create --name=tensorflow python=3 numpy
+source activate tensorflow
+sudo apt-get install python3-numpy python3-dev python3-pip python3-wheel
+pip install six
+
+INSTALL BAZEL
+
+$ cd tensorflow  # cd to the top-level directory created
+$ ./configure
+
+~$ gcc -march=native -Q --help=target
+
+~$ bazel build -c opt --copt=-mavx --copt=-mfpmath=both --copt=-msse4.2 -k //tensorflow/tools/pip_package:build_pip_package
+~$ bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+~$ pip install /tmp/tensorflow_pkg/tensorflow-1.3.0rc0-cp36-cp36m-linux_x86_64.whl
